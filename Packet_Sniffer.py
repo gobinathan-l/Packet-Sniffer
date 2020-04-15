@@ -10,7 +10,7 @@ import argparse
 
 def get_arguements():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--interface", dest="interface", help="Press -h to display Help.")
+    parser.add_argument("-i", "--interface", dest="interface", help="Interface to Listen on")
     options = parser.parse_args()
     return options
 
